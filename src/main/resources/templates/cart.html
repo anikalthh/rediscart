@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<header>
+    <h1 class="mb-5">Welcome, <span data-th-text="${name}"></span></h2>
+</header>
+<body class="m-5">
+    <div>
+        <h3>Add items to your cart</h3>
+        <form method="post"
+            data-th-object="${item}">
+            <span data-th-if="${#fields.hasErrors('name')}" data-th-errors="*{name}" data-th-errorclass="error"></span>
+            <input class="form-control mb-3" type="text" name="item" placeholder="Enter item name" data-th-field="*{name}">
+
+            <span data-th-if="${#fields.hasErrors('quantity')}" data-th-errors="*{quantity}" data-th-errorclass="error"></span>
+            <input class="form-control mb-3" type="text" name="quantity" placeholder="Enter Quantity" data-th-field="*{quantity}">
+
+            <div>
+                <button class="btn btn-outline-dark" type="submit" formaction="/cart">Add to cart</button>
+                <button class="btn btn-outline-dark" type="submit" formaction="/cart/checkout">Checkout & Logout</button>
+            </div>
+            
+        </form>
+    </div>
+
+    <div class="mt-5">
+        <p data-th-if="${#lists.isEmpty(cart)}">Your shopping cart is currently empty.</p>
+        <h3 data-th-unless="${#lists.isEmpty(cart)}">Your shopping cart</h3>
+    </div>
+    <div data-th-unless="${#lists.isEmpty(cart)}">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-th-each="item : ${cart}">
+                    <td data-th-text="${item.name}"></td>
+                    <td data-th-text="${item.quantity}"></td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
